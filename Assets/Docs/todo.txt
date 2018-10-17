@@ -1,0 +1,6 @@
+backgrounds
+ombre, posizionamenti camera
+controlli
+fare un logo
+navigazione nei menù
+salvataggio delle impostazioni
