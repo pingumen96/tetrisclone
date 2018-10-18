@@ -23,6 +23,9 @@ public class Cube : MonoBehaviour {
         /*if(GetComponentInParent<Transform>().GetComponentsInChildren<Transform>().GetLength(0) == 1) {
             Destroy(GetComponentInParent<Transform>().gameObject);
         }*/
-        GetComponentInParent<Piece>().OnCubeDestroyed();
+        Piece parent = GetComponentInParent<Piece>();
+        if (parent) {
+            parent.OnCubeDestroyed();
+        }
     }
 }

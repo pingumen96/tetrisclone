@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour {
     private int[,] grid = new int[GRID_ROWS + 1, GRID_COLS + 2];
     private short[] fallingPieceMatrixOrigin = new short[2];
     private Piece fallingPieceComponent;
+    private Piece.TetrominoType currentPieceType;
+    private Piece.TetrominoType nextPieceType;
+
     private bool gameOver = true, paused = false;
     private byte level = 0;
     private uint score = 0;
@@ -67,13 +70,16 @@ public class GameController : MonoBehaviour {
         // reset valori
         score = lines = 0;
         level = 0;
+		uiController.UpdateHUD(score, level, lines);
 
         fallingTime = 1.0f / SPEED_DIVIDERS[level];
 
         uiController.PlayGameMusic();
 
         gameOver = false;
-        
+		paused = false;
+
+        nextPieceType = GeneratePieceType();
         CreateNewPiece();
     }
 
@@ -133,10 +139,15 @@ public class GameController : MonoBehaviour {
         uiController.ShowPauseMenu(false);
     }
 
+    private Piece.TetrominoType GeneratePieceType() {
+        return (Piece.TetrominoType)Random.Range(0, (int)Piece.TetrominoType.Z + 1);
+    }
+
     void CreateNewPiece() {
-        Piece.TetrominoType fallingPieceType = (Piece.TetrominoType)Random.Range(0, (int)Piece.TetrominoType.Z + 1);
-        //fallingPieceType = Piece.TetrominoType.S;
-        GameObject fallingPiece = Instantiate(pieceTemplates[(int)fallingPieceType], STARTING_POINT, Quaternion.identity, piecesParent);
+        currentPieceType = nextPieceType;
+        nextPieceType = GeneratePieceType();
+        uiController.SetNextPiece(nextPieceType);
+        GameObject fallingPiece = Instantiate(pieceTemplates[(int)currentPieceType], STARTING_POINT, Quaternion.identity, piecesParent);
         fallingPiece.SetActive(true);
         fallingPieceComponent = fallingPiece.GetComponent<Piece>();
         fallingPieceMatrixOrigin[0] = STARTING_COLLISION_MATRIX_ORIGIN[0];

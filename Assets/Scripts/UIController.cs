@@ -29,6 +29,8 @@ public class UIController : MonoBehaviour {
     public Text scoreValue;
     public Text levelValue;
     public Text linesValue;
+    public RawImage nextPieceImage;
+    public Texture[] textures;
 
 	// Use this for initialization
 	void Start () {
@@ -106,6 +108,10 @@ public class UIController : MonoBehaviour {
         scoreValue.text = score.ToString();
         levelValue.text = level.ToString();
         linesValue.text = lines.ToString();
+    }
+
+    public void SetNextPiece(Piece.TetrominoType tetrominoType) {
+        nextPieceImage.texture = textures[(int)tetrominoType];
     }
 
     public void ShowGameOverMenu(bool active) {
