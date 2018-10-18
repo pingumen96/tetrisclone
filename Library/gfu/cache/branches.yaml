@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 2
-  lastUpdatedAtString: 2018-10-16T20:19:38.938+02:00
-  initializedAtString: 2018-10-16T20:16:31.638+02:00
+  lastUpdatedAtString: 2018-10-18T20:23:25.290+02:00
+  initializedAtString: 2018-10-18T20:23:25.240+02:00
   localBranches:
   - name: master
     tracking: origin/master
   remoteBranches:
+  - name: origin/add-license-1
+    tracking: '[None]'
   - name: origin/master
     tracking: '[None]'
   remotes:
@@ -42,9 +44,15 @@ MonoBehaviour:
     - origin
     subKeys:
     - Values:
+      - add-license-1
       - master
     subKeyValues:
     - Values:
+      - name: add-license-1
+        remote:
+          name: origin
+          url: https://github.com/pingumen96/tetrisclone.git
+        trackingBranch: 
       - name: master
         remote:
           name: origin
