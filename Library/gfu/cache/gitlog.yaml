@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -530159753, guid: 68c7e4565cde54155bb78d8e935f1dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cacheType: 3
+  lastUpdatedAtString: 2018-10-16T20:21:06.468+02:00
+  initializedAtString: 2018-10-16T20:16:31.798+02:00
+  log:
+  - commitID: 9fb53d06223ae1f6e064316de734b261feb19240
+    mergeA: 
+    mergeB: 
+    authorName: pingumen96
+    authorEmail: sinhue.rossi@gmail.com
+    commitEmail: sinhue.rossi@gmail.com
+    commitName: pingumen96
+    summary: Initial commit
+    description: Initial commit
+    timeString: 2018-10-11T10:03:25.000+02:00
+    commitTimeString: 2018-10-11T10:03:25.000+02:00
+    changes:
+    - path: .gitattributes
+      fullPath: D:\ProgettiUnity\Tetris\.gitattributes
+      projectPath: .gitattributes
+      originalPath: 
+      status: 4
+      staged: 0
+    - path: .gitignore
+      fullPath: D:\ProgettiUnity\Tetris\.gitignore
+      projectPath: .gitignore
+      originalPath: 
+      status: 4
+      staged: 0
+    - path: Assets\.gitignore
+      fullPath: D:\ProgettiUnity\Tetris\Assets\.gitignore
+      projectPath: Assets\.gitignore
+      originalPath: 
+      status: 4
+      staged: 0
