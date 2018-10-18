@@ -12,6 +12,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 5
-  lastUpdatedAtString: 2018-10-16T20:21:54.377+02:00
-  initializedAtString: 2018-10-16T20:17:02.528+02:00
-  entries: []
+  lastUpdatedAtString: 2018-10-18T20:16:08.959+02:00
+  initializedAtString: 2018-10-18T20:16:08.031+02:00
+  entries:
+  - path: Library\EditorInstance.json
+    fullPath: D:\ProgettiUnity\Tetris\Library\EditorInstance.json
+    projectPath: Library\EditorInstance.json
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: Library\gfu\cache\gitstatusentries.yaml
+    fullPath: D:\ProgettiUnity\Tetris\Library\gfu\cache\gitstatusentries.yaml
+    projectPath: Library\gfu\cache\gitstatusentries.yaml
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: Library\gfu\cache\gittrackingstatus.yaml
+    fullPath: D:\ProgettiUnity\Tetris\Library\gfu\cache\gittrackingstatus.yaml
+    projectPath: Library\gfu\cache\gittrackingstatus.yaml
+    originalPath: 
+    status: 3
+    staged: 0
+  - path: Temp\ProcessJobs\65ba0cd0905bc0a110c6334584ca2699.bakert
+    fullPath: D:\ProgettiUnity\Tetris\Temp\ProcessJobs\65ba0cd0905bc0a110c6334584ca2699.bakert
+    projectPath: Temp\ProcessJobs\65ba0cd0905bc0a110c6334584ca2699.bakert
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: Temp\ProcessJobs\79e9dbbccb6d1dacbd071efa46bc416d.bakert
+    fullPath: D:\ProgettiUnity\Tetris\Temp\ProcessJobs\79e9dbbccb6d1dacbd071efa46bc416d.bakert
+    projectPath: Temp\ProcessJobs\79e9dbbccb6d1dacbd071efa46bc416d.bakert
+    originalPath: 
+    status: 1
+    staged: 0
+  - path: Temp\UnityLockfile
+    fullPath: D:\ProgettiUnity\Tetris\Temp\UnityLockfile
+    projectPath: Temp\UnityLockfile
+    originalPath: 
+    status: 1
+    staged: 0
