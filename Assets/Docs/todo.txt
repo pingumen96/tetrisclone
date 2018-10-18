@@ -4,3 +4,6 @@ controlli
 fare un logo
 navigazione nei menù
 salvataggio delle impostazioni
+aggiustare bug sul pezzo senza cubi all'interno
+deve vedersi il prossimo pezzo
+effetti sonori quando si distrugge la riga
