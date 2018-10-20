@@ -1,6 +1,3 @@
-backgrounds
-controlli
 fare un logo
 salvataggio delle impostazioni
 effetti sonori quando si distrugge la riga
-?navigazione nei menù

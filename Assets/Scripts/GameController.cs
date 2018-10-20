@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour {
     private const int MAX_LEVEL = 10;
     private uint[] POINTS_PER_LINE = new uint[5] {0, 100, 250, 400, 550 };
     private float[] SPEED_DIVIDERS = new float[MAX_LEVEL + 1] {1.0f, 1.2f, 1.5f, 2.0f, 2.5f, 3.0f, 3.5f, 4.0f, 4.5f, 5.0f, 6.0f};
-    private int[] LEVEL_THRESHOLD = new int[MAX_LEVEL] { 1000, 5000, 15000, 30000, 50000, 80000, 120000, 170000, 240000, 350000 };
+    //private int[] LEVEL_THRESHOLD = new int[MAX_LEVEL] { 1000, 5000, 15000, 30000, 50000, 80000, 120000, 170000, 240000, 350000 };
     private float fallingTime;
 
     private uint CalculateScore(byte deletedLines) {
@@ -66,11 +66,13 @@ public class GameController : MonoBehaviour {
             grid[GRID_ROWS, i] = 1;
         }
 
-        
+
         // reset valori
+        
         score = lines = 0;
         level = 0;
 		uiController.UpdateHUD(score, level, lines);
+        uiController.SetGameMusicSpeed(1.0f);
 
         fallingTime = 1.0f / SPEED_DIVIDERS[level];
 
@@ -135,7 +137,7 @@ public class GameController : MonoBehaviour {
 
     public void ResumeGame() {
         paused = false;
-        InvokeRepeating("ManageMovements", 1.0f, fallingTime);
+        InvokeRepeating("ManageMovements", 0.3f, fallingTime);
         uiController.ShowPauseMenu(false);
     }
 
@@ -152,7 +154,13 @@ public class GameController : MonoBehaviour {
         fallingPieceComponent = fallingPiece.GetComponent<Piece>();
         fallingPieceMatrixOrigin[0] = STARTING_COLLISION_MATRIX_ORIGIN[0];
         fallingPieceMatrixOrigin[1] = STARTING_COLLISION_MATRIX_ORIGIN[1];
+
         InvokeRepeating("ManageMovements", 1.0f, fallingTime);
+    }
+
+    private void EndGame() {
+        gameOver = true;
+        uiController.ShowGameOverMenu(true);
     }
 
     void ManageMovements() {
@@ -160,6 +168,10 @@ public class GameController : MonoBehaviour {
             fallingPieceMatrixOrigin[0]++;
             fallingPieceComponent.Move(Piece.MovementDirection.DOWN);
         } else {
+            // se si sovrappongono pezzi è game over a prescindere
+            if(IsColliding(fallingPieceMatrixOrigin[0], fallingPieceMatrixOrigin[1])) {
+                EndGame();
+            }
             CancelInvoke("ManageMovements");
             UpdateGrid();
             if(!gameOver) {
@@ -227,15 +239,13 @@ public class GameController : MonoBehaviour {
         /* aggiorna la griglia di booleani ad ogni spostamento sulla base della matrice di collisione del pezzo che sta scendendo */
         for(int i = 0; i < Piece.COLLISION_MATRIX_SIZE; i++) {
             for(int j = 0; j < Piece.COLLISION_MATRIX_SIZE; j++) {
-                if(i + fallingPieceMatrixOrigin[0] >= 0) {
-                    if(fallingPieceComponent.collisionMatrix[i, j] != 0) {
+                if(fallingPieceComponent.collisionMatrix[i, j] != 0) {
+                    if(i + fallingPieceMatrixOrigin[0] >= 0) {
                         grid[i + fallingPieceMatrixOrigin[0], j + fallingPieceMatrixOrigin[1]] = fallingPieceComponent.collisionMatrix[i, j];
+                    } else {
+                        Debug.Log("BASTA, STOP, FERMA TUTTO");
+                        EndGame();
                     }
-                } else {
-                    Debug.Log("BASTA, STOP, FERMA TUTTO");
-                    gameOver = true;
-                    //CancelInvoke("ManageMovements");
-                    uiController.ShowGameOverMenu(true);
                 }
             }
         }
@@ -243,17 +253,27 @@ public class GameController : MonoBehaviour {
         byte deletedLines = CheckForDeletion();
         score += CalculateScore(deletedLines);
         lines += deletedLines;
-        
+
         // si adatta il livello in base allo score
-        if(level <= MAX_LEVEL && score >= LEVEL_THRESHOLD[level]) {
+        /*if(level <= MAX_LEVEL && score >= LEVEL_THRESHOLD[level]) {
             fallingTime = 1.0f / SPEED_DIVIDERS[++level];
+        }*/
+        if(level < MAX_LEVEL && lines / 10 != level) {
+            LevelUp();
         }
+        
 
         uiController.UpdateHUD(score, level, lines);
         //PrintGrid();
     }
 
-    byte CheckForDeletion() {
+    private void LevelUp() {
+        level = (byte)(lines / 10);
+        fallingTime = 1.0f / SPEED_DIVIDERS[level];
+        uiController.SetGameMusicSpeed(1.0f + Mathf.Log((level + 4) / 4.0f));
+    }
+
+    private byte CheckForDeletion() {
         bool flag;
         byte countDeleted = 0;
         for(int i = GRID_ROWS - 1; i >= 0; i--) {

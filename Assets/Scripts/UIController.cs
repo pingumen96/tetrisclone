@@ -90,6 +90,10 @@ public class UIController : MonoBehaviour {
         playTheme.Play();
     }
 
+    public void SetGameMusicSpeed(float speed) {
+        playTheme.pitch = speed;
+    }
+
     public void PlayMenuMusic() {
         playTheme.Stop();
         menuTheme.Play();
