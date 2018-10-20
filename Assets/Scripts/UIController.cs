@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour {
     public Toggle fullScreenToggle;
     public Dropdown resolutionDropdown;
     public Dropdown qualityDropdown;
+    public Camera currentCamera;
 
     // audio
     public AudioClip[] audioClips;
@@ -130,5 +131,9 @@ public class UIController : MonoBehaviour {
 
     public void ShowGameOverMenu(bool active) {
         gameOverMenu.SetActive(active);
+    }
+
+    public void AlternativeMode() {
+        currentCamera.transform.Rotate(new Vector3(0.0f, 0.0f, 180.0f));
     }
 }

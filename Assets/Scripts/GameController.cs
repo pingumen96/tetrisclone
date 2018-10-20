@@ -291,9 +291,7 @@ public class GameController : MonoBehaviour {
             LevelUp();
         }
         
-
         uiController.UpdateHUD(score, level, lines);
-        //PrintGrid();
     }
 
     private void LevelUp() {
@@ -331,19 +329,10 @@ public class GameController : MonoBehaviour {
                 if(grid[i, j] != 0) {
                     GameObject.Find(grid[i, j].ToString()).GetComponent<Cube>().MoveDown();
                 }
-
             }
 
             // si crea una nuova riga
             grid[0, j] = 0;
-        }
-    }
-
-    void PrintGrid() {
-        Debug.Log("--------------------------------------------------------------");
-        for(int i = 0; i < grid.GetLength(0); i++) {
-            Debug.Log(grid[i, 0] + "\t" + grid[i, 1] + "\t" + grid[i, 2] + "\t" + grid[i, 3] + "\t" + grid[i, 4] + "\t" + grid[i, 5] + "\t"
-                + grid[i, 6] + "\t" + grid[i, 7] + "\t" + grid[i, 8] + "\t" + grid[i, 9] + "\t" + grid[i, 10] + "\t" + grid[i, 11]);
         }
     }
 }
