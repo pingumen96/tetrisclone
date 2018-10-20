@@ -31,6 +31,10 @@ public class GameController : MonoBehaviour {
     //private int[] LEVEL_THRESHOLD = new int[MAX_LEVEL] { 1000, 5000, 15000, 30000, 50000, 80000, 120000, 170000, 240000, 350000 };
     private float fallingTime;
 
+    // cagate per gestire i movimenti come vogliamo noi, con la "responsività" che vogliamo
+    private byte lateralMovementWait = 0;
+    private bool continuousLateralMovement = false;
+
     private uint CalculateScore(byte deletedLines) {
         return (uint)(POINTS_PER_LINE[deletedLines] * (1.0f + level / 10.0f));
     }
@@ -93,6 +97,22 @@ public class GameController : MonoBehaviour {
     private void Update() {
         if(!gameOver && !paused) {
             // gestione input
+            if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+                lateralMovementWait = 0;
+                if(!WillCollide(Piece.MovementDirection.LEFT)) {
+                    fallingPieceMatrixOrigin[1]--;
+                    fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
+                    continuousLateralMovement = true;
+                }
+            } else if(Input.GetKeyDown(KeyCode.RightArrow)) {
+                lateralMovementWait = 0;
+                if(!WillCollide(Piece.MovementDirection.RIGHT)) {
+                    fallingPieceMatrixOrigin[1]++;
+                    fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
+                    continuousLateralMovement = true;
+                }
+            }
+
             if(Input.GetKeyDown(KeyCode.UpArrow)) {
                 /* rotazione */
                 if(!WillCollide(fallingPieceComponent.GetNextRotationDirection())) {
@@ -111,19 +131,24 @@ public class GameController : MonoBehaviour {
     void FixedUpdate() {
         if(!gameOver && !paused) {
             // gestione input
-            if(Input.GetKey(KeyCode.LeftArrow)) {
-                /* muovere verso sinistra */
-                if(!WillCollide(Piece.MovementDirection.LEFT)) {
-                    fallingPieceMatrixOrigin[1]--;
-                    fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
+            if(continuousLateralMovement) {
+                lateralMovementWait++;
+                if(Input.GetKey(KeyCode.LeftArrow) && lateralMovementWait % 3 == 0) {
+                    if(!WillCollide(Piece.MovementDirection.LEFT)) {
+                        fallingPieceMatrixOrigin[1]--;
+                        fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
+                    }
+                } else if(Input.GetKey(KeyCode.RightArrow) && lateralMovementWait % 3 == 0) {
+                    if(!WillCollide(Piece.MovementDirection.RIGHT)) {
+                        fallingPieceMatrixOrigin[1]++;
+                        fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
+                    }
                 }
-            } else if(Input.GetKey(KeyCode.RightArrow)) {
-                /* muovere verso destra */
-                if(!WillCollide(Piece.MovementDirection.RIGHT)) {
-                    fallingPieceMatrixOrigin[1]++;
-                    fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
-                }
-            } else if(Input.GetKey(KeyCode.DownArrow)) {
+            } else {
+                continuousLateralMovement = false;
+            }
+
+            if(Input.GetKey(KeyCode.DownArrow)) {
                 ManageMovements();
             }
         }
@@ -253,6 +278,10 @@ public class GameController : MonoBehaviour {
         byte deletedLines = CheckForDeletion();
         score += CalculateScore(deletedLines);
         lines += deletedLines;
+
+        if(deletedLines > 0) {
+            uiController.PlaySoundEffect();
+        }
 
         // si adatta il livello in base allo score
         /*if(level <= MAX_LEVEL && score >= LEVEL_THRESHOLD[level]) {

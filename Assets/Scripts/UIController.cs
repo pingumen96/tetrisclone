@@ -18,7 +18,9 @@ public class UIController : MonoBehaviour {
     public Dropdown musicDropdown;
     public AudioSource playTheme;
     public AudioSource menuTheme;
+    public AudioSource soundEffect;
     public Slider musicVolume;
+    public Slider soundEffectVolume;
 
 
     // other
@@ -89,7 +91,7 @@ public class UIController : MonoBehaviour {
         menuTheme.Stop();
         playTheme.Play();
     }
-
+    
     public void SetGameMusicSpeed(float speed) {
         playTheme.pitch = speed;
     }
@@ -99,9 +101,17 @@ public class UIController : MonoBehaviour {
         menuTheme.Play();
     }
 
+    public void PlaySoundEffect() {
+        soundEffect.Play();
+    }
+
     public void OnMusicVolumeChanged() {
         playTheme.volume = musicVolume.value;
         menuTheme.volume = musicVolume.value * MENU_VOLUME_MULT;
+    }
+
+    public void OnSoundEffectVolumeChanged() {
+        soundEffect.volume = soundEffectVolume.value;
     }
 
     public void ShowPauseMenu(bool active) {

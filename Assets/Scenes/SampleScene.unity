@@ -1303,11 +1303,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 50fc7fd282ac0ed4f9f5c1c096108944, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1680,7 +1680,7 @@ GameObject:
   - component: {fileID: 295123333}
   - component: {fileID: 295123334}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: SoundEffectVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1752,7 +1752,18 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1555327258}
+        m_MethodName: OnSoundEffectVolumeChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &319536412
@@ -8694,7 +8705,9 @@ MonoBehaviour:
   musicDropdown: {fileID: 144238610}
   playTheme: {fileID: 1201082617}
   menuTheme: {fileID: 156255892}
+  soundEffect: {fileID: 253497455}
   musicVolume: {fileID: 168860540}
+  soundEffectVolume: {fileID: 295123334}
   pauseMenu: {fileID: 1248468022}
   gameOverMenu: {fileID: 926224317}
   scoreValue: {fileID: 1284167185}
