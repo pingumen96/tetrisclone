@@ -6,13 +6,6 @@ public class Piece : MonoBehaviour {
     public static short COLLISION_MATRIX_SIZE = 4;
     private System.Collections.Generic.List<Cube> cubes = new System.Collections.Generic.List<Cube>();
     private byte remainingCubes = 0;
-    /*private static int[,,] collisionMatrices = new int[,,] {{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 1, 1, 1}, {0, 0, 0, 0}}, // I
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 1}, {0, 0, 0, 1}}, // J
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 1}, {0, 1, 0, 0}}, // L
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 0}, {0, 1, 1, 0}}, // O
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 1, 1}, {0, 1, 1, 0}}, // S
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 1}, {0, 0, 1, 0}}, // T
-                                                              { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 1, 1, 0}, {0, 0, 1, 1}}};*/ // Z
     public TetrominoType tetrominoType;
     public enum MovementDirection { LEFT = 0, RIGHT, DOWN };
     public enum RotationDirection { CLOCKWISE, COUNTER_CLOCKWISE, NONE };
