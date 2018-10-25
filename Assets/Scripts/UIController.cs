@@ -54,9 +54,6 @@ public class UIController : MonoBehaviour {
         resolutionDropdown.value = resolutionDropdown.options.Count - 1;
         OnResolutionDropdownChanged();
 
-
-        /* implementare background statico/dinamico */
-
         musicDropdown.options = new List<Dropdown.OptionData>();
         foreach(AudioClip a in audioClips) {
             musicDropdown.options.Add(new Dropdown.OptionData(a.name));
