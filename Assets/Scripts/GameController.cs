@@ -34,6 +34,10 @@ public class GameController : MonoBehaviour {
     // cagate per gestire i movimenti come vogliamo noi, con la "responsività" che vogliamo
     private byte lateralMovementWait = 0;
     private bool continuousLateralMovement = false;
+    private byte downMovementWait = 0;
+    // numero di frame che deve passare prima di fare un nuovo movimento laterale tenendo premuto
+    private byte LATERAL_MOVEMENT_SYNC = 12;
+    private byte DOWN_MOVEMENT_SYNC = 5;
 
     private uint CalculateScore(byte deletedLines) {
         return (uint)(POINTS_PER_LINE[deletedLines] * (1.0f + level / 10.0f));
@@ -45,6 +49,8 @@ public class GameController : MonoBehaviour {
         } else if(instance != this) {
             Destroy(gameObject);
         }
+
+        Application.targetFrameRate = 30;
         Random.InitState((int)System.DateTime.Now.Ticks);
     }
 
@@ -97,8 +103,28 @@ public class GameController : MonoBehaviour {
     private void Update() {
         if(!gameOver && !paused) {
             // gestione input
-            if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+            // fare refactoring su questa parte
+            if(!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow)) {
+                continuousLateralMovement = false;
                 lateralMovementWait = 0;
+            }
+
+            if(continuousLateralMovement) {
+                lateralMovementWait++;
+                if(Input.GetKey(KeyCode.LeftArrow) && lateralMovementWait % LATERAL_MOVEMENT_SYNC == 0) {
+                    if(!WillCollide(Piece.MovementDirection.LEFT)) {
+                        fallingPieceMatrixOrigin[1]--;
+                        fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
+                    }
+                } else if(Input.GetKey(KeyCode.RightArrow) && lateralMovementWait % LATERAL_MOVEMENT_SYNC == 0) {
+                    if(!WillCollide(Piece.MovementDirection.RIGHT)) {
+                        fallingPieceMatrixOrigin[1]++;
+                        fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
+                    }
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.LeftArrow)) {
                 if(!WillCollide(Piece.MovementDirection.LEFT)) {
                     fallingPieceMatrixOrigin[1]--;
                     fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
@@ -112,6 +138,7 @@ public class GameController : MonoBehaviour {
                     continuousLateralMovement = true;
                 }
             }
+            
 
             if(Input.GetKeyDown(KeyCode.UpArrow)) {
                 /* rotazione */
@@ -124,33 +151,23 @@ public class GameController : MonoBehaviour {
                 } else {
                     PauseGame();
                 }
+            }
 
+            if(Input.GetKey(KeyCode.DownArrow)) {
+                downMovementWait++;
+                if(downMovementWait % DOWN_MOVEMENT_SYNC == 0) {
+                    ManageMovements();
+                }
+                
             }
         }
     }
     void FixedUpdate() {
         if(!gameOver && !paused) {
             // gestione input
-            if(continuousLateralMovement) {
-                lateralMovementWait++;
-                if(Input.GetKey(KeyCode.LeftArrow) && lateralMovementWait % 3 == 0) {
-                    if(!WillCollide(Piece.MovementDirection.LEFT)) {
-                        fallingPieceMatrixOrigin[1]--;
-                        fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
-                    }
-                } else if(Input.GetKey(KeyCode.RightArrow) && lateralMovementWait % 3 == 0) {
-                    if(!WillCollide(Piece.MovementDirection.RIGHT)) {
-                        fallingPieceMatrixOrigin[1]++;
-                        fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
-                    }
-                }
-            } else {
-                continuousLateralMovement = false;
-            }
 
-            if(Input.GetKey(KeyCode.DownArrow)) {
-                ManageMovements();
-            }
+
+            
         }
     }
 
