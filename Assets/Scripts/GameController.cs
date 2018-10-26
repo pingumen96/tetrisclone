@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        // si limitano fps per non andare troppo veloci, se si va più lenti non succede nulla
         Application.targetFrameRate = 30;
         Random.InitState((int)System.DateTime.Now.Ticks);
     }
@@ -101,51 +102,60 @@ public class GameController : MonoBehaviour {
 
 
     private void Update() {
+        Debug.Log(continuousLateralMovement);
         if(!gameOver && !paused) {
             // gestione input
             // fare refactoring su questa parte
+
+            // se non si stanno premendo i tasti si "resettano" le variabili sugli spostamenti continui
             if(!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow)) {
                 continuousLateralMovement = false;
                 lateralMovementWait = 0;
             }
 
+            // se ci si è spostati precedentemente e i tasti sono ancora premuti
             if(continuousLateralMovement) {
+                // si aggiorna "attesa" dei frame giusti
                 lateralMovementWait++;
-                if(Input.GetKey(KeyCode.LeftArrow) && lateralMovementWait % LATERAL_MOVEMENT_SYNC == 0) {
-                    if(!WillCollide(Piece.MovementDirection.LEFT)) {
+
+                if(lateralMovementWait % LATERAL_MOVEMENT_SYNC == 0) {
+                    if(Input.GetKey(KeyCode.LeftArrow) && !WillCollide(Piece.MovementDirection.LEFT)) {
                         fallingPieceMatrixOrigin[1]--;
                         fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
-                    }
-                } else if(Input.GetKey(KeyCode.RightArrow) && lateralMovementWait % LATERAL_MOVEMENT_SYNC == 0) {
-                    if(!WillCollide(Piece.MovementDirection.RIGHT)) {
+                    } else if(Input.GetKey(KeyCode.RightArrow) && !WillCollide(Piece.MovementDirection.RIGHT)) {
                         fallingPieceMatrixOrigin[1]++;
                         fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
                     }
                 }
+                
             }
 
             if(Input.GetKeyDown(KeyCode.LeftArrow)) {
+                continuousLateralMovement = true;
+                lateralMovementWait = 0;
                 if(!WillCollide(Piece.MovementDirection.LEFT)) {
                     fallingPieceMatrixOrigin[1]--;
                     fallingPieceComponent.Move(Piece.MovementDirection.LEFT);
-                    continuousLateralMovement = true;
                 }
             } else if(Input.GetKeyDown(KeyCode.RightArrow)) {
+                continuousLateralMovement = true;
                 lateralMovementWait = 0;
                 if(!WillCollide(Piece.MovementDirection.RIGHT)) {
                     fallingPieceMatrixOrigin[1]++;
                     fallingPieceComponent.Move(Piece.MovementDirection.RIGHT);
-                    continuousLateralMovement = true;
                 }
             }
             
 
+            // istruzioni che possono eseguirsi sempre
             if(Input.GetKeyDown(KeyCode.UpArrow)) {
                 /* rotazione */
                 if(!WillCollide(fallingPieceComponent.GetNextRotationDirection())) {
                     fallingPieceComponent.Rotate();
                 }
-            } else if(Input.GetKeyDown(KeyCode.Escape)) {
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape)) {
                 if(paused) {
                     ResumeGame();
                 } else {
@@ -160,14 +170,6 @@ public class GameController : MonoBehaviour {
                 }
                 
             }
-        }
-    }
-    void FixedUpdate() {
-        if(!gameOver && !paused) {
-            // gestione input
-
-
-            
         }
     }
 
