@@ -1,0 +1,14 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Tetris",
+"dataUrl": "tetrisclone_WebGL.data.unityweb",
+"asmCodeUrl": "tetrisclone_WebGL.asm.code.unityweb",
+"asmMemoryUrl": "tetrisclone_WebGL.asm.memory.unityweb",
+"asmFrameworkUrl": "tetrisclone_WebGL.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"dataUrl": "must-revalidate"}
+}
