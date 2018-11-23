@@ -1,6 +1,6 @@
 This Tetris clone has been realized by Jorge Matas & Sinhuè Angelo Rossi using C# and Unity3D.
 
-This implementation wants to be clean and CPU-friendly, so raycasts and physical elements are not being used. Geometrical transformations and a matrix of ints are instead used to manage the game grid.
+This implementation aims to be clean and CPU-friendly, so raycasts and physical elements are not being used. Geometrical transformations and a matrix of ints are instead used to manage the game grid.
 
 The most interesting part is the grid management because it happens on two levels:
 - the graphical one (pieces positions, transformations, etc.);
